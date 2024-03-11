@@ -258,6 +258,15 @@ def create_test_tree() -> tuple[NamedNode, NamedNode]:
     return a, f
 
 
+class TestHashableNamedNode:
+    def test_Hashable_Name(self):
+        a = NamedNode(name=(7,))
+        assert a.name == (7,)
+
+        b = NamedNode(name=str((7,)))
+        assert b.name == "(7,)"
+
+
 class TestIterators:
     def test_preorderiter(self):
         root, _ = create_test_tree()

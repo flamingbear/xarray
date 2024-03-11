@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sys
-from collections.abc import Iterator, Mapping
+from collections.abc import Hashable, Iterator, Mapping
 from pathlib import PurePosixPath
 from typing import (
     TYPE_CHECKING,
@@ -575,6 +575,7 @@ class NamedNode(TreeNode, Generic[Tree]):
     """
 
     _name: str | None
+    _hashable: Hashable | None = None
     _parent: Tree | None
     _children: dict[str, Tree]
 
@@ -584,15 +585,20 @@ class NamedNode(TreeNode, Generic[Tree]):
         self.name = name
 
     @property
-    def name(self) -> str | None:
+    def name(self) -> Hashable | None:
         """The name of this node."""
+        if self._hashable:
+            return self._hashable
         return self._name
 
     @name.setter
-    def name(self, name: str | None) -> None:
+    def name(self, name: Hashable | None) -> None:
         if name is not None:
+            if not isinstance(name, Hashable):
+                raise TypeError("node name must be a Hashable or None")
             if not isinstance(name, str):
-                raise TypeError("node name must be a string or None")
+                self._hashable = name
+                name = str(name)
             if "/" in name:
                 raise ValueError("node names cannot contain forward slashes")
         self._name = name

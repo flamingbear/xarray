@@ -24,9 +24,6 @@ class TestTreeCreation:
         assert dt.name is None
 
     def test_bad_names(self):
-        with pytest.raises(TypeError):
-            DataTree(name=5)  # type: ignore[arg-type]
-
         with pytest.raises(ValueError):
             DataTree(name="folder/data")
 
@@ -177,6 +174,19 @@ class TestGetItem:
         highres: DataTree = DataTree(name="highres", parent=results)
         assert folder1["results"] is results
         assert folder1["results/highres"] is highres
+
+    def test_getitem_same_names(self):
+        a: DataTree = DataTree(name="node")
+        b: DataTree = DataTree(name="node", parent=a)
+        c: DataTree = DataTree(name="node", parent=b)
+        assert a["node"] is b
+        assert a["node/node"] is c
+
+    def test_getitem_hashable(self):
+        a: DataTree = DataTree(name=(1,))
+        b: DataTree = DataTree(name=(2,), parent=a)
+        c: DataTree = DataTree(name=(3,), parent=b)
+        a["(2,)/(3,)"] is c
 
     def test_getitem_self(self):
         dt: DataTree = DataTree()

@@ -92,7 +92,7 @@ def _coerce_to_dataset(data: Dataset | DataArray | None) -> Dataset:
 
 
 def _check_for_name_collisions(
-    children: Iterable[str], variables: Iterable[Hashable]
+    children: Iterable[Hashable], variables: Iterable[Hashable]
 ) -> None:
     colliding_names = set(children).intersection(set(variables))
     if colliding_names:
@@ -332,7 +332,7 @@ class DataTree(
 
     # TODO all groupby classes
 
-    _name: str | None
+    _name: Hashable | None
     _parent: DataTree | None
     _children: dict[str, DataTree]
     _attrs: dict[Hashable, Any] | None
@@ -363,7 +363,7 @@ class DataTree(
         data: Dataset | DataArray | None = None,
         parent: DataTree | None = None,
         children: Mapping[str, DataTree] | None = None,
-        name: str | None = None,
+        name: Hashable | None = None,
     ):
         """
         Create a single node of a DataTree.
@@ -380,7 +380,7 @@ class DataTree(
             Parent node to this node. Default is None.
         children : Mapping[str, DataTree], optional
             Any child nodes of this node. Default is None.
-        name : str, optional
+        name : Hashable, optional
             Name for this node of the tree. Default is None.
 
         Returns
@@ -653,7 +653,7 @@ class DataTree(
         attrs: dict | None = None,
         indexes: dict[Any, Index] | None = None,
         encoding: dict | None = None,
-        name: str | None = None,
+        name: Hashable | None = None,
         parent: DataTree | None = None,
         children: dict[str, DataTree] | None = None,
         close: Callable[[], None] | None = None,
