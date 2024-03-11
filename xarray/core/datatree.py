@@ -94,7 +94,9 @@ def _coerce_to_dataset(data: Dataset | DataArray | None) -> Dataset:
 def _check_for_name_collisions(
     children: Iterable[Hashable], variables: Iterable[Hashable]
 ) -> None:
-    colliding_names = set(children).intersection(set(variables))
+    safe_variables = {var_strvar for var in variables for var_strvar in (var, str(var))}
+    safe_children = {c_strc for c in children for c_strc in (c, str(c))}
+    colliding_names = safe_children.intersection(safe_variables)
     if colliding_names:
         raise KeyError(
             f"Some names would collide between variables and children: {list(colliding_names)}"
