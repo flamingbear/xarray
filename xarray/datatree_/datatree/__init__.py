@@ -1,5 +1,5 @@
 # import public API
-from .mapping import TreeIsomorphismError, map_over_subtree
+from xarray.core.datatree_mapping import TreeIsomorphismError, map_over_subtree
 from xarray.core.treenode import InvalidTreeError, NotFoundInTreeError
 
 
