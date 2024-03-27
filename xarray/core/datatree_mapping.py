@@ -7,10 +7,8 @@ from textwrap import dedent
 from typing import TYPE_CHECKING, Callable
 
 from xarray import DataArray, Dataset
-
 from xarray.core.iterators import LevelOrderIter
 from xarray.core.treenode import NodePath, TreeNode
-from xarray.datatree_.datatree.iterators import LevelOrderIter
 
 if TYPE_CHECKING:
     from xarray.core.datatree import DataTree
