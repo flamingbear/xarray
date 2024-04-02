@@ -20,10 +20,6 @@ STATIC_FILES = (
     ("xarray.static.css", "style.css"),
 )
 
-from xarray.core.options import OPTIONS
-
-OPTIONS["display_expand_groups"] = "default"
-
 
 @lru_cache(None)
 def _load_static_files():
