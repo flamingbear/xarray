@@ -5,7 +5,7 @@ from typing import cast
 
 import pytest
 
-from xarray.core.iterators import LevelOrderIter, PreOrderIter
+from xarray.core.iterators import LevelOrderIter
 from xarray.core.treenode import InvalidTreeError, NamedNode, NodePath, TreeNode
 
 
@@ -262,17 +262,17 @@ class TestIterators:
     def test_preorderiter(self):
         root, _ = create_test_tree()
         result: list[str | None] = [
-            node.name for node in cast(Iterator[NamedNode], PreOrderIter(root))
+            node.name for node in cast(Iterator[NamedNode], LevelOrderIter(root))
         ]
         expected = [
             "a",
             "b",
+            "c",
             "d",
             "e",
+            "h",
             "f",
             "g",
-            "c",
-            "h",
             "i",
         ]
         assert result == expected
@@ -321,12 +321,12 @@ class TestAncestry:
         expected = [
             "a",
             "b",
+            "c",
             "d",
             "e",
+            "h",
             "f",
             "g",
-            "c",
-            "h",
             "i",
         ]
         for node, expected_name in zip(subtree, expected):
@@ -337,12 +337,12 @@ class TestAncestry:
         descendants = root.descendants
         expected = [
             "b",
+            "c",
             "d",
             "e",
+            "h",
             "f",
             "g",
-            "c",
-            "h",
             "i",
         ]
         for node, expected_name in zip(descendants, expected):

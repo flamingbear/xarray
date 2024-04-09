@@ -491,14 +491,15 @@ class TestTreeFromDict:
     def test_full(self, simple_datatree):
         dt = simple_datatree
         paths = list(node.path for node in dt.subtree)
+        print(paths)
         assert paths == [
             "/",
             "/set1",
+            "/set2",
+            "/set3",
             "/set1/set1",
             "/set1/set2",
-            "/set2",
             "/set2/set1",
-            "/set3",
         ]
 
     def test_datatree_values(self):
