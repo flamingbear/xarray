@@ -259,23 +259,6 @@ def create_test_tree() -> tuple[NamedNode, NamedNode]:
 
 
 class TestIterators:
-    def test_preorderiter(self):
-        root, _ = create_test_tree()
-        result: list[str | None] = [
-            node.name for node in cast(Iterator[NamedNode], LevelOrderIter(root))
-        ]
-        expected = [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "h",
-            "f",
-            "g",
-            "i",
-        ]
-        assert result == expected
 
     def test_levelorderiter(self):
         root, _ = create_test_tree()
